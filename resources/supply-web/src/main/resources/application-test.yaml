@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    name: mydb
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+server:
+  port: ${SERVER_PORT}
+  address: ${SERVER_ADDRESS}
+  context-path: /supply
+  
