@@ -8,8 +8,9 @@
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/static/js/date.js"></script>
+
 <script type="text/javascript">
-	
 	var url;
 	
 	$(document).ready(function() {
@@ -32,8 +33,7 @@
 				});
 			}
 		});
-		
-	});	
+    });
 	
 	function openGoodsTypeAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","新增商品类别");
@@ -142,6 +142,7 @@
 		$("#purchasingPrice").numberbox("setValue","");
 		$("#sellingPrice").numberbox("setValue","");
 		$("#minNum").numberbox("setValue","");
+        $("#scattered").val("");
 		$("#producer").val("");
 		$("#remarks").val("");
 	}
@@ -308,7 +309,6 @@
 	}
 	
 	$(document).ready(function() {
-		
 		$("#dg4").datagrid({
 			onDblClickRow:function(index,row){
 				var name=row.name;
@@ -317,7 +317,7 @@
 				$("#dlg4").dialog("close");
 			}
 		});
-		
+        $("#produceTime").datebox("setValue",genTodayStr());
 		$("#dg").datagrid({
 			onDblClickRow:function(index,row){
 				$("#dlg2").dialog("open").dialog("setTitle","修改商品信息");
@@ -346,17 +346,19 @@
 			fitColumns="true" pagination="true" rownumbers="true" singleSelect="true"
 			url="/admin/goods/list" fit="true" toolbar="#tb">
 				<thead>
-					<th field="id" width="30" align="center">编号</th>
-					<th field="code" width="50" align="center">商品编码</th>
-					<th field="name" width="150" align="center">商品名称</th>
-					<th field="model" width="50" align="center">商品型号</th>
+					<th field="id" width="30" align="center" hidden=true>编号</th>
+					<th field="code" width="50" align="center">粮油编码</th>
+					<th field="name" width="150" align="center">粮油名称</th>
+					<th field="model" width="50" align="center">规格</th>
 					<th field="typeId" width="40" align="center" hidden=true formatter="formatGoodsTypeId">类别ID</th>
 					<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
-					<th field="unit" width="50" align="center">单位</th>
+					<th field="unit" width="50" align="center">整量单位</th>
+					<th field="scattered" width="50" align="center">零散比</th>
+					<th field="produceTime" width="70" align="center">生产日期</th>
 					<th field="purchasingPrice" width="50" align="right" formatter="formatPurchasingPrice">采购价</th>
 					<th field="sellingPrice" width="50" align="right" formatter="formatSellingPrice">出售价</th>
 					<th field="minNum" width="50" align="center">库存下限</th>
-					<th field="producer" width="200" align="center">生产厂商</th>
+					<th field="producer" width="180" align="center">生产厂商</th>
 					<th field="remarks" hidden=true width="150" align="center">备注</th>
 				</thead>
 			</table>
@@ -400,27 +402,38 @@
 						<a href="javascript:openChooseGoodsTypeDialog()" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>商品编码：</td>
+					<td>粮油编码：</td>
 					<td>
 						<input type="text" id="code" name="code" class="easyui-validatebox" required="true" style="width: 120px" readonly="readonly" />
 					</td>
 				</tr>
 				<tr>
-					<td>商品名称：</td>
+					<td>粮油名称：</td>
 					<td colspan="4">
 						<input type="text" id="name" name="name" class="easyui-validatebox" required="true" style="width: 340px;"  />
 					</td>
 				</tr>
 				<tr>
-					<td>商品型号：</td>
+					<td>规格：</td>
 					<td>
-						<input type="text" id="model" name="model" class="easyui-validatebox" required="true" style="width: 120px"  />
+						<input type="text" id="model" name="model" class="easyui-validatebox" style="width: 120px"  />
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>单位：</td>
+					<td>整量单位：</td>
 					<td>
 						<select class="easyui-combobox" required="true" id="unit" name="unit" style="width: 90px" data-options="panelHeight:'auto',editable:false,valueField:'name',textField:'name',url:'/admin/goodsUnit/comboList'"></select>
 						<a href="javascript:openChooseGoodsUnitDialog()" class="easyui-linkbutton" iconCls="icon-search" plain="true"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>零散比：</td>
+					<td>
+						<input type="text" id="scattered" name="scattered" class="easyui-validatebox" data-options="min:0" style="width: 120px"  />
+					</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>生产日期：</td>
+					<td>
+						<input type="text" id="produceTime" name="produceTime" class="easyui-datebox" required="true" data-options="editable:false" style="width: 120px"/>
 					</td>
 				</tr>
 				<tr>
