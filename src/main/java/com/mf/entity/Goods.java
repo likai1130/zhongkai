@@ -1,13 +1,7 @@
 package com.mf.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 商品实体
@@ -37,7 +31,13 @@ public class Goods {
 	
 	@Column(length=10)
 	private String unit; // 商品单位
-	
+
+	@Column(length=10)
+	private String scattered; // 零散比
+
+	@Column(length=50)
+	private String produceTime; // 生产日期
+
 	private float lastPurchasingPrice; // 上次采购价格
 	
 	private float purchasingPrice; // 采购价格  成本价  假如价格变动 算平均值
@@ -190,6 +190,22 @@ public class Goods {
 
 	public void setSaleTotal(int saleTotal) {
 		this.saleTotal = saleTotal;
+	}
+
+	public String getScattered() {
+		return scattered;
+	}
+
+	public void setScattered(String scattered) {
+		this.scattered = scattered;
+	}
+
+	public String getProduceTime() {
+		return produceTime;
+	}
+
+	public void setProduceTime(String produceTime) {
+		this.produceTime = produceTime;
 	}
 
 	@Override

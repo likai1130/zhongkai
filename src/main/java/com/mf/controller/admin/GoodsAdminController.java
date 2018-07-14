@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -172,7 +174,7 @@ public class GoodsAdminController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions(value="商品管理")
-	public Map<String,Object> save(Goods goods)throws Exception{
+	public Map<String,Object> save(@Valid Goods goods,BindingResult bindingResult)throws Exception{
 		Map<String,Object> resultMap=new HashMap<>();
 		if(goods.getId()!=null){
 			logService.save(new Log(Log.UPDATE_ACTION,"更新商品信息"+goods));
