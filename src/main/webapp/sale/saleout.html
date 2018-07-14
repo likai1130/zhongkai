@@ -359,10 +359,10 @@
 			fitColumns="true" rownumbers="true" singleSelect="true"
 			 fit="true" toolbar="#tb">
 				<thead>
-					<th field="code" width="30" align="center">商品编码</th>
-					<th field="name" width="150" align="center">商品名称</th>
+					<th field="code" width="30" align="center">粮油编号</th>
+					<th field="name" width="150" align="center">粮油名称</th>
 					<th field="model" width="50" align="center">型号</th>
-					<th field="unit" width="50" align="center">单位</th>
+					<th field="unit" width="50" align="center">整量单位</th>
 					<th field="price" width="50" align="center">单价</th>
 					<th field="num" width="50" align="center">数量</th>
 					<th field="total" width="50" align="right">总金额</th>
@@ -385,7 +385,7 @@
 		<div class="easyui-layout" style="width: 100%;height: 100%">
 			<div region="north" style="height: 50px">
 				<div style="padding-top: 8px;padding-left: 40px">
-					&nbsp;商品编码或者名称：&nbsp;<input type="text" id="s_codeOrName" size="20" onkeydown="if(event.keyCode==13) searchGoods()"/>
+					&nbsp;粮油编号或者名称：&nbsp;<input type="text" id="s_codeOrName" size="20" onkeydown="if(event.keyCode==13) searchGoods()"/>
 					<a href="javascript:searchGoods()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
 				</div>
 			</div>
@@ -404,10 +404,10 @@
 					url="/admin/goods/list" fit="true" toolbar="#tb2">
 						<thead>
 							<th field="id" width="30" hidden="true" align="center">编号</th>
-							<th field="code" width="50" align="center">商品编码</th>
-							<th field="name" width="150" align="left">商品名称</th>
-							<th field="model" width="50" align="center">商品型号</th>
-							<th field="unit" width="50" align="center">单位</th>
+							<th field="code" width="50" align="center">粮油编号</th>
+							<th field="name" width="150" align="left">粮油名称</th>
+							<th field="model" width="50" align="center">规格</th>
+							<th field="unit" width="50" align="center">整量单位</th>
 							<th field="sellingPrice" width="50" align="right" formatter="formatLastSellingPrice">销售单价</th>
 							<th field="purchasingPrice" width="50" align="right" formatter="formatSellingPrice">成本均价</th>
 							<th field="inventoryQuantity" width="50" align="center">库存数量</th>
@@ -430,21 +430,21 @@
 			<form id="fm2" method="post">
 			<table cellspacing="8px">
 				<tr>
-					<td>商品编号：</td>
+					<td>粮油编号：</td>
 					<td>
 						<input type="text" id="code" name="code" readonly="readonly" size="10"/>
 					</td>
-					<td width="60">商品名称：</td>
+					<td width="60">粮油名称：</td>
 					<td>
 						<input type="text" id="name" name="name" readonly="readonly" size="10"/>
 					</td>
 				</tr>
 				<tr>
-					<td>商品型号：</td>
+					<td>规格：</td>
 					<td>
 						<input type="text" id="model" name="model" readonly="readonly" size="10"/>
 					</td>
-					<td>商品单位：</td>
+					<td>商品整量单位：</td>
 					<td>
 						<input type="text" id="unit" name="unit" readonly="readonly" size="10"/>
 					</td>

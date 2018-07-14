@@ -174,7 +174,7 @@ public class GoodsAdminController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions(value="商品管理")
-	public Map<String,Object> save(@Valid Goods goods,BindingResult bindingResult)throws Exception{
+	public Map<String,Object> save(Goods goods)throws Exception{
 		Map<String,Object> resultMap=new HashMap<>();
 		if(goods.getId()!=null){
 			logService.save(new Log(Log.UPDATE_ACTION,"更新商品信息"+goods));
