@@ -35,9 +35,6 @@ public class Goods {
 	@Column(length=10)
 	private String scattered; // 零散比
 
-	@Column(length=50)
-	private String produceTime; // 生产日期
-
 	private float lastPurchasingPrice; // 上次采购价格
 	
 	private float purchasingPrice; // 采购价格  成本价  假如价格变动 算平均值
@@ -198,14 +195,6 @@ public class Goods {
 
 	public void setScattered(String scattered) {
 		this.scattered = scattered;
-	}
-
-	public String getProduceTime() {
-		return produceTime;
-	}
-
-	public void setProduceTime(String produceTime) {
-		this.produceTime = produceTime;
 	}
 
 	@Override

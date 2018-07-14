@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	
 	function chooseGoodsType(){
-		$("#dlg").dialog("open").dialog("setTitle","选择商品类别");
+		$("#dlg").dialog("open").dialog("setTitle","选择粮油类别");
 		$("#typeTree").tree({
 			url:'/admin/goodsType/loadTreeInfo',
 			onLoadSuccess:function(){
@@ -71,26 +71,27 @@
 	fitColumns="true" pagination="true" rownumbers="true" pageSize=20
 	url="/admin/goods/listInventory" fit="true" toolbar="#tb">
 		<thead>
-					<th field="code" width="30" align="center">编码</th>
-					<th field="name" width="150" align="left">商品名称</th>
-					<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
-					<th field="model" width="50" align="center">型号</th>
-					<th field="inventoryQuantity" width="50" align="center">库存数量</th>
-					<th field="saleTotal" width="50" align="center">销售总数</th>
-					<th field="lastPurchasingPrice" width="50" align="right" formatter="formatLastPurchasingPrice">上次进价</th>
-					<th field="purchasingPrice" width="50" align="right" formatter="formatPurchasingPrice">成本均价</th>
-					<th field="sellingPrice" width="50" align="right" formatter="formatSellingPrice">销售价</th>
-					<th field="amount" width="60" align="right" formatter="formatAmount">库存总值</th>
-					<th field="unit" width="50" align="center">单位</th>
-					<th field="producer" width="150" align="left">生产厂商</th>
+			<th field="code" width="30" align="center">编码</th>
+			<th field="name" width="150" align="left">粮油名称</th>
+			<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
+			<th field="model" width="50" align="center">规格</th>
+			<th field="inventoryQuantity" width="50" align="center">库存数量</th>
+			<th field="saleTotal" width="50" align="center">销售总数</th>
+			<th field="lastPurchasingPrice" width="50" align="right" formatter="formatLastPurchasingPrice">上次进价</th>
+			<th field="purchasingPrice" width="50" align="right" formatter="formatPurchasingPrice">成本均价</th>
+			<th field="sellingPrice" width="50" align="right" formatter="formatSellingPrice">销售价</th>
+			<th field="amount" width="60" align="right" formatter="formatAmount">库存总值</th>
+			<th field="unit" width="50" align="center">整量单位</th>
+			<th field="scattered" width="50" align="center">零整比</th>
+			<th field="producer" width="150" align="left">生产厂商</th>
 		</thead>
 	</table>
 	
 	<div id="tb">
 		<div style="padding: 5px">
 		    <input type="hidden" id="typeId"/>
-			&nbsp;商品类别：&nbsp;<input type="text" id="typeName" readonly="readonly" onclick="chooseGoodsType()" style="width: 90px" />
-			&nbsp;商品编码或者名称：&nbsp;<input type="text" id="codeOrName" size="20"  onkeydown="if(event.keyCode==13) searchStock()"/>
+			&nbsp;粮油类别：&nbsp;<input type="text" id="typeName" readonly="readonly" onclick="chooseGoodsType()" style="width: 90px" />
+			&nbsp;粮油编码或者名称：&nbsp;<input type="text" id="codeOrName" size="20"  onkeydown="if(event.keyCode==13) searchStock()"/>
 			<a href="javascript:searchStock()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
 		</div>
 	</div>
