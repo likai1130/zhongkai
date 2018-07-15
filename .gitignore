@@ -18,3 +18,4 @@
 */.factorypath
 /logs
 */logs/
+*/resources/application.yml
