@@ -1,10 +1,7 @@
 package com.mf.util;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 日期工具类
@@ -96,7 +93,7 @@ public class DateUtil {
 		}
 		return months;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		List<String> dates=getRangeMonths("2016-10","2017-12");
 		for(String date:dates){
