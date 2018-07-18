@@ -1,11 +1,10 @@
 package com.mf.service.impl;
 
 import com.mf.entity.*;
-import com.mf.service.ExportExcelService;
-import com.mf.service.SaleListGoodsService;
-import com.mf.service.SaleListService;
+import com.mf.service.*;
 import com.mf.util.DateUtil;
 import com.mf.util.ExcelUtil;
+import com.mf.vo.PurchaseVO;
 import com.mf.vo.SaleOutVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,6 +26,12 @@ public class ExportExcelServiceImpl implements ExportExcelService{
 
     @Autowired
     private SaleListGoodsService saleListGoodsService;
+
+    @Autowired
+    private PurchaseListService purchaseListService;
+
+    @Autowired
+    private PurchaseListGoodsService purchaseListGoodsService;
     /**
      * 销售单导出
      * @param saleList
@@ -46,7 +51,7 @@ public class ExportExcelServiceImpl implements ExportExcelService{
         for (SaleList sale : saleListList){
             Integer saleListId = sale.getId();
             List<SaleListGoods> saleListGoodsList = saleListGoodsService.listBySaleListId(saleListId);
-            if (saleListGoodsList.size()>0){
+            if (saleListGoodsList != null && saleListGoodsList.size()>0){
                 for (SaleListGoods saleListGoods : saleListGoodsList){
                     SaleOutVO saleOutVO = new SaleOutVO();
                     saleOutVO.setSaleNumber(sale.getSaleNumber());
@@ -103,8 +108,39 @@ public class ExportExcelServiceImpl implements ExportExcelService{
      * @return
      */
     @Override
-    public String exportPurchase(PurchaseList purchaseList) {
-        return null;
+    public String exportPurchase(PurchaseList purchaseList) throws Exception {
+        Date startDate = purchaseList.getbPurchaseDate();
+        Date endDate = purchaseList.getePurchaseDate();
+        String start = DateUtil.formatDate(startDate, "yyyy-MM-dd");
+        String end = DateUtil.formatDate(endDate, "yyyy-MM-dd");
+        String fileName = "（" + start + "至" + end + "）"+ "进货单.xls";
+        String titleName = start + "至" + end + "进货单统计";
+        String[] headers = {"进货单号", "进货日期", "供应商","联系人","联系电话","地址", "粮油编码","粮油名称","规格","单价","数量","整量单位","零整比","生产日期","总金额","交易状态","备注","操作人"};
+        List<PurchaseList> purchaseListList=purchaseListService.list(purchaseList, Sort.Direction.DESC, "purchaseDate");
+        ArrayList<PurchaseVO> purchaseVOS = new ArrayList<>();
+        for (PurchaseList purchase : purchaseListList){
+            List<PurchaseListGoods> purchaseListGoods = purchaseListGoodsService.listByPurchaseListId(purchase.getId());
+            if (purchaseListGoods != null && purchaseListGoods.size()>0){
+                for (PurchaseListGoods purchaseListGood : purchaseListGoods){
+                    PurchaseVO purchaseVO = new PurchaseVO(purchase.getPurchaseNumber(), purchase.getPurchaseDate(), purchase.getSupplier().getName(),
+                            purchase.getSupplier().getContact() , purchase.getSupplier().getNumber(), purchase.getSupplier().getAddress(),
+                            purchase.getRemarks(), purchase.getUser().getUserName());
+                    purchaseVO.setCode(purchaseListGood.getCode());
+                    purchaseVO.setGoodsName(purchaseListGood.getName());
+                    purchaseVO.setModel(purchaseListGood.getModel());
+                    purchaseVO.setPrice(purchaseListGood.getPrice());
+                    purchaseVO.setNum(purchaseListGood.getNum());
+                    purchaseVO.setUnit(purchaseListGood.getUnit());
+                    purchaseVO.setScattered(purchaseListGood.getScattered());
+                    purchaseVO.setProduceTime(purchaseListGood.getProduceTime());
+                    purchaseVO.setTotal(purchaseListGood.getTotal());
+                    purchaseVO.setState(purchase.getState() == 1 ? "已付" : "未付");
+                    purchaseVOS.add(purchaseVO);
+                }
+            }
+        }
+        String msg = ExcelUtil.exportExcel(titleName, titleName, headers, purchaseVOS, "yyyy-MM-dd", fileName);
+        return msg;
     }
 
     /**

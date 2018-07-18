@@ -284,7 +284,7 @@ public class SaleListAdminController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/export")
-	@RequiresPermissions(value = "销售单据查询")
+	@RequiresPermissions(value = {"销售单据查询", "客户统计"}, logical = Logical.OR)
 	public Map<String, Object> exportSaleOut(SaleList saleList) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		String msg = exportExcelService.exportSaleout(saleList);

@@ -32,7 +32,7 @@ public interface ExportExcelService {
      * 导出进货入库单
      * @return
      */
-    public String exportPurchase(PurchaseList purchaseList);
+    public String exportPurchase(PurchaseList purchaseList) throws Exception;
 
     /**
      * 导出退货单

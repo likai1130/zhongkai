@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.mf.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -20,10 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import com.mf.entity.Log;
 import com.mf.entity.PurchaseList;
 import com.mf.entity.PurchaseListGoods;
-import com.mf.service.LogService;
-import com.mf.service.PurchaseListGoodsService;
-import com.mf.service.PurchaseListService;
-import com.mf.service.UserService;
 import com.mf.util.DateUtil;
 import com.mf.util.StringUtil;
 
@@ -47,7 +44,10 @@ public class PurchaseListAdminController {
 	
 	@Resource
 	private LogService logService;
-	
+
+	@Resource
+	private ExportExcelService exportExcelService;
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -197,4 +197,21 @@ public class PurchaseListAdminController {
 		resultMap.put("success", true);
 		return resultMap;
 	}
+
+	/**
+	 * 导出进货单
+	 * @param purchaseList
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/export")
+	@RequiresPermissions(value={"进货单据查询","供应商统计"},logical=Logical.OR)
+	public Map<String,Object> exportPurchase(PurchaseList purchaseList)throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+		String msg = exportExcelService.exportPurchase(purchaseList);
+		logService.save(new Log(Log.EXPORT_ACTION, "导出进货单"));
+		resultMap.put("msg", msg);
+		return resultMap;
+	}
+
 }
