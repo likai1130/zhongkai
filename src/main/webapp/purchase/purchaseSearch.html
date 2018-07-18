@@ -34,7 +34,28 @@
 			}
 		});
 	}
-	
+
+    function exportPurchase(){
+        $("#dg2").datagrid("loadData",{total:0,rows:[]});
+        var supplierId;
+        if(isNaN($("#s_supplier").combobox("getValue"))){
+            supplierId="";
+        }else{
+            supplierId=$("#s_supplier").combobox("getValue");
+        }
+        $("#dg").datagrid({
+            url:'/admin/purchaseList/export',
+            queryParams:{
+                purchaseNumber:$("#s_purchaseNumber").val(),
+                "supplier.id":supplierId,
+                state:$("#s_state").combobox("getValue"),
+                bPurchaseDate:$("#s_bPurchaseDate").datebox("getValue"),
+                ePurchaseDate:$("#s_ePurchaseDate").datebox("getValue")
+            }
+        });
+        $.messager.alert("系统提示","导出成功！");
+    }
+
 	function formatSupplier(val,row){
 		return val.name;
 	}
@@ -131,6 +152,7 @@
 			<input id="s_ePurchaseDate" class="easyui-datebox" editable=false style="width:100px"/>
 			&nbsp;&nbsp;<a href="javascript:searchPurchase()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
 			&nbsp;&nbsp;<a href="javascript:deletePurchase()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+			&nbsp;&nbsp;<a href="javascript:exportPurchase()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出Excel</a>
 		</fieldset>
 	</div>
  </div>
