@@ -30,7 +30,7 @@ public class Log {
 	public final static String UPDATE_ACTION="更新操作";
 	public final static String ADD_ACTION="添加操作";
 	public final static String DELETE_ACTION="删除操作";
-	public final static String EXPORT_ACTION="删除操作";
+	public final static String EXPORT_ACTION="导出操作";
 
 	@Id
 	@GeneratedValue
