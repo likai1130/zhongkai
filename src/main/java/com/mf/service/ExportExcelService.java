@@ -1,9 +1,6 @@
 package com.mf.service;
 
-import com.mf.entity.CustomerReturnList;
-import com.mf.entity.PurchaseList;
-import com.mf.entity.ReturnList;
-import com.mf.entity.SaleList;
+import com.mf.entity.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,6 +42,13 @@ public interface ExportExcelService {
      * @return
      */
     public String exportPurchaseCount(PurchaseList purchaseList,ReturnList returnList);
+
+    /**
+     * 导出库存
+     * @param goods
+     * @return
+     */
+    public String exportStock(Goods goods,Integer page,Integer rows);
 
 
 }

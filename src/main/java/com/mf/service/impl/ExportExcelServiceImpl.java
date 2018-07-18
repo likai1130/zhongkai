@@ -163,4 +163,15 @@ public class ExportExcelServiceImpl implements ExportExcelService{
     public String exportPurchaseCount(PurchaseList purchaseList, ReturnList returnList) {
         return null;
     }
+
+    /**
+     * TODO 导出库存
+     * @param goods
+     * @return
+     */
+    @Override
+    public String exportStock(Goods goods,Integer page,Integer rows) {
+
+        return null;
+    }
 }
