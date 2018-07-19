@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import com.mf.service.*;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Sort.Direction;
@@ -17,10 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mf.entity.Goods;
 import com.mf.entity.Log;
-import com.mf.service.CustomerReturnListGoodsService;
-import com.mf.service.GoodsService;
-import com.mf.service.LogService;
-import com.mf.service.SaleListGoodsService;
 import com.mf.util.StringUtil;
 
 /**
@@ -43,6 +40,9 @@ public class GoodsAdminController {
 	
 	@Resource
 	private LogService logService;
+
+	@Resource
+	private ExportExcelService exportExcelService;
 	
 	/**
 	 * 分页查询商品信息
@@ -259,4 +259,21 @@ public class GoodsAdminController {
 		return resultMap;
 	}
 
+	/**
+	 * 导出库存
+	 * @param goods
+	 * @param page
+	 * @param rows
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/export")//page和rows是动态申请的参数
+	@RequiresPermissions(value="当前库存查询")//确认权限
+	public Map<String,Object> exportStock(Goods goods,@RequestParam(value="page",required=false)Integer page,@RequestParam(value="rows",required=false)Integer rows)throws Exception{
+		Map<String,Object> resultMap=new HashMap<>();
+		String msg = exportExcelService.exportStock(goods, page, rows);
+		resultMap.put("msg", msg);
+		logService.save(new Log(Log.EXPORT_ACTION,"导出库存excel"));
+		return resultMap;
+	}
 }

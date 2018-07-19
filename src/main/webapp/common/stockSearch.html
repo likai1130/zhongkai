@@ -44,6 +44,17 @@
 			"codeOrName":$("#codeOrName").val()
 		});
 	}
+
+    function exportStock(){
+        $("#dg").datagrid({
+            url:'/admin/goods/export',
+            queryParams:{
+                "type.id":$("#typeId").val(),
+                "codeOrName":$("#codeOrName").val()
+            }
+        });
+        $.messager.alert("系统提示","导出成功！");
+    }
 	
 	function formatGoodsTypeName(val,row){
 		return row.type.name;

@@ -8,17 +8,17 @@ package com.mf.vo;
  */
 public class GoodsVO {
 
-    private String code; // 商品编码
+    private String code = ""; // 商品编码
 
-    private String name; // 商品名称
+    private String name = ""; // 商品名称
 
-    private String type; // 商品类别
+    private String type = ""; // 商品类别
 
-    private String model; // 规格
+    private String model = ""; // 规格
 
-    private String unit; // 商品单位
+    private String unit = ""; // 商品单位
 
-    private String scattered; // 零整比
+    private String scattered = ""; // 零整比
 
     private int inventoryQuantity; // 库存数量
 
@@ -34,9 +34,9 @@ public class GoodsVO {
 
     private int minNum; // 库存下限
 
-    private String producer; // 生产厂商
+    private String producer = ""; // 生产厂商
 
-    private String remarks; // 备注
+    private String remarks = ""; // 备注
 
     public String getCode() {
         return code;
@@ -155,6 +155,27 @@ public class GoodsVO {
     }
 
     public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public GoodsVO() {
+    }
+
+    public GoodsVO(String code, String name, String type, String model, String unit, String scattered, int inventoryQuantity, int saleTotal, float lastPurchasingPrice, float purchasingPrice, float sellingPrice, float amount, int minNum, String producer, String remarks) {
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.model = model;
+        this.unit = unit;
+        this.scattered = scattered;
+        this.inventoryQuantity = inventoryQuantity;
+        this.saleTotal = saleTotal;
+        this.lastPurchasingPrice = lastPurchasingPrice;
+        this.purchasingPrice = purchasingPrice;
+        this.sellingPrice = sellingPrice;
+        this.amount = amount;
+        this.minNum = minNum;
+        this.producer = producer;
         this.remarks = remarks;
     }
 }
