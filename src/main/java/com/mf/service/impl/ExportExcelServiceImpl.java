@@ -4,6 +4,7 @@ import com.mf.entity.*;
 import com.mf.service.*;
 import com.mf.util.DateUtil;
 import com.mf.util.ExcelUtil;
+import com.mf.vo.GoodsVO;
 import com.mf.vo.PurchaseVO;
 import com.mf.vo.SaleOutVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class ExportExcelServiceImpl implements ExportExcelService{
 
     @Autowired
     private PurchaseListGoodsService purchaseListGoodsService;
+
+    @Autowired
+    private GoodsService goodsService;
+
+    @Autowired
+    private CustomerReturnListGoodsService customerReturnListGoodsService;
     /**
      * 销售单导出
      * @param saleList
@@ -165,13 +172,25 @@ public class ExportExcelServiceImpl implements ExportExcelService{
     }
 
     /**
-     * TODO 导出库存
+     * 导出库存
      * @param goods
      * @return
      */
     @Override
     public String exportStock(Goods goods,Integer page,Integer rows) {
-
-        return null;
+        String fileName = "当前库存统计.xls";
+        String titleName ="当前库存统计";
+        String[] headers = {"粮油编码", "粮油名称", "类别","规格","整量单位","零整比", "库存数量","销售总数","上次进价","成本均价","出售价格","库存总值","库存下限","生产厂商","备注"};
+        ArrayList<GoodsVO> goodsVOS = new ArrayList<>();
+        List<Goods> goodsList=goodsService.list(goods, page, rows, Sort.Direction.ASC, "id");//得到goods并便利在t_goods表中（首次进入goods无参数，查询时goods有参数）
+        for(Goods g:goodsList){//分别在出售清单和退回清单里查
+            g.setSaleTotal(saleListGoodsService.getTotalByGoodsId(g.getId())-customerReturnListGoodsService.getTotalByGoodsId(g.getId())); // 设置销售总量 售出-退回=销售总量
+            GoodsVO goodsVO = new GoodsVO(g.getCode(), g.getName(), g.getType().getName(), g.getModel(), g.getUnit(),
+                            g.getScattered(), g.getInventoryQuantity(), g.getSaleTotal(), g.getLastPurchasingPrice(),
+                            g.getPurchasingPrice(), g.getSellingPrice(), (g.getInventoryQuantity() * g.getPurchasingPrice()), g.getMinNum(), g.getProducer(), g.getRemarks());
+            goodsVOS.add(goodsVO);
+        }
+        String msg = ExcelUtil.exportExcel(titleName, titleName, headers, goodsVOS, "yyyy-MM-dd", fileName);
+        return msg;
     }
 }
