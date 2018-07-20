@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import com.mf.service.*;
 import org.apache.shiro.SecurityUtils;
@@ -285,9 +286,9 @@ public class SaleListAdminController {
 	 */
 	@RequestMapping("/export")
 	@RequiresPermissions(value = {"销售单据查询", "客户统计"}, logical = Logical.OR)
-	public Map<String, Object> exportSaleOut(SaleList saleList) throws Exception {
+	public Map<String, Object> exportSaleOut(SaleList saleList,HttpServletResponse httpServletResponse) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
-		String msg = exportExcelService.exportSaleout(saleList);
+		String msg = exportExcelService.exportSaleout(saleList,httpServletResponse);
 		logService.save(new Log(Log.EXPORT_ACTION, "导出销售单"));
 		resultMap.put("msg", msg);
 		return resultMap;

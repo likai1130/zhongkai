@@ -39,25 +39,19 @@
 	}
 
     function exportSale(){
-        $("#dg2").datagrid("loadData",{total:0,rows:[]});
         var customerId;
         if(isNaN($("#s_customer").combobox("getValue"))){
             customerId="";
         }else{
             customerId=$("#s_customer").combobox("getValue");
         }
-        $("#dg").datagrid({
-            url:'/admin/saleList/export',
-            queryParams:{
-                saleNumber:$("#s_saleNumber").val(),
-                "customer.id":customerId,
-                state:$("#s_state").combobox("getValue"),
-                bSaleDate:$("#s_bSaleDate").datebox("getValue"),
-                eSaleDate:$("#s_eSaleDate").datebox("getValue")
-            }
-        });
-        $.messager.alert("系统提示","导出成功！");
-	}
+        saleNumber=$("#s_saleNumber").val();
+		state=$("#s_state").combobox("getValue");
+		bSaleDate=$("#s_bSaleDate").datebox("getValue");
+		eSaleDate=$("#s_eSaleDate").datebox("getValue");
+        window.open("/admin/saleList/export?bSaleDate=" + bSaleDate +"&eSaleDate=" +eSaleDate + "&state=" + state + "&saleNumber=" + saleNumber +"&customer.id=" + customerId );
+
+    }
 
 	function formatSupplier(val,row){
 		return val.name;
