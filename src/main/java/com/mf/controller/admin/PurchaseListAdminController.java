@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import com.mf.service.*;
 import org.apache.shiro.SecurityUtils;
@@ -206,9 +207,9 @@ public class PurchaseListAdminController {
 	 */
 	@RequestMapping("/export")
 	@RequiresPermissions(value={"进货单据查询","供应商统计"},logical=Logical.OR)
-	public Map<String,Object> exportPurchase(PurchaseList purchaseList)throws Exception{
+	public Map<String,Object> exportPurchase(PurchaseList purchaseList,HttpServletResponse httpServletResponse)throws Exception{
 		Map<String, Object> resultMap = new HashMap<>();
-		String msg = exportExcelService.exportPurchase(purchaseList);
+		String msg = exportExcelService.exportPurchase(purchaseList,httpServletResponse);
 		logService.save(new Log(Log.EXPORT_ACTION, "导出进货单"));
 		resultMap.put("msg", msg);
 		return resultMap;

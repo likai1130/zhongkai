@@ -36,24 +36,17 @@
 	}
 
     function exportPurchase(){
-        $("#dg2").datagrid("loadData",{total:0,rows:[]});
         var supplierId;
         if(isNaN($("#s_supplier").combobox("getValue"))){
             supplierId="";
         }else{
             supplierId=$("#s_supplier").combobox("getValue");
         }
-        $("#dg").datagrid({
-            url:'/admin/purchaseList/export',
-            queryParams:{
-                purchaseNumber:$("#s_purchaseNumber").val(),
-                "supplier.id":supplierId,
-                state:$("#s_state").combobox("getValue"),
-                bPurchaseDate:$("#s_bPurchaseDate").datebox("getValue"),
-                ePurchaseDate:$("#s_ePurchaseDate").datebox("getValue")
-            }
-        });
-        $.messager.alert("系统提示","导出成功！");
+		purchaseNumber=$("#s_purchaseNumber").val();
+        bPurchaseDate=$("#s_bPurchaseDate").datebox("getValue");
+		ePurchaseDate=$("#s_ePurchaseDate").datebox("getValue");
+        state=$("#s_state").combobox("getValue");
+	    window.open("/admin/purchaseList/export?bPurchaseDate=" + bPurchaseDate +"&ePurchaseDate=" +ePurchaseDate + "&state=" + state + "&purchaseNumber=" + purchaseNumber +"&supplier.id=" + supplierId );
     }
 
 	function formatSupplier(val,row){

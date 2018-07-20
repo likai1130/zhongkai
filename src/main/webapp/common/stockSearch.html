@@ -46,14 +46,17 @@
 	}
 
     function exportStock(){
-        $("#dg").datagrid({
-            url:'/admin/goods/export',
-            queryParams:{
-                "type.id":$("#typeId").val(),
-                "codeOrName":$("#codeOrName").val()
-            }
-        });
-        $.messager.alert("系统提示","导出成功！");
+	    var option = $("#dg").datagrid("getPager").data("pagination").options;
+       	var page = option.pageNumber;
+       	var pageSize = option.pageSize;
+	    var type;
+        if(isNaN($("#typeId").val())){
+            type="";
+        }else{
+            type=$("#typeId").val();
+        }
+        codeOrName=$("#codeOrName").val();
+	    window.open("/admin/goods/export?codeOrName=" +codeOrName + "&type.id=" + type + "&page="+ page + "&rows=" + pageSize);
     }
 	
 	function formatGoodsTypeName(val,row){

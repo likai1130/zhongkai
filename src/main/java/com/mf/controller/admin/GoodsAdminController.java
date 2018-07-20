@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.mf.service.*;
@@ -269,9 +270,9 @@ public class GoodsAdminController {
 	 */
 	@RequestMapping("/export")//page和rows是动态申请的参数
 	@RequiresPermissions(value="当前库存查询")//确认权限
-	public Map<String,Object> exportStock(Goods goods,@RequestParam(value="page",required=false)Integer page,@RequestParam(value="rows",required=false)Integer rows)throws Exception{
+	public Map<String,Object> exportStock(Goods goods,@RequestParam(value="page",required=false)Integer page,@RequestParam(value="rows",required=false)Integer rows,HttpServletResponse httpServletResponse)throws Exception{
 		Map<String,Object> resultMap=new HashMap<>();
-		String msg = exportExcelService.exportStock(goods, page, rows);
+		String msg = exportExcelService.exportStock(goods, page, rows,httpServletResponse);
 		resultMap.put("msg", msg);
 		logService.save(new Log(Log.EXPORT_ACTION,"导出库存excel"));
 		return resultMap;

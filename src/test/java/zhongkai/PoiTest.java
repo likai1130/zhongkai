@@ -50,9 +50,7 @@ public class PoiTest {
 
         list.add(customer);
         list.add(customer2);
-
-
-        String msg = ExcelUtil.exportExcel(sheetName, titleName, headers, list, pattern, fileName);
-        System.out.println(msg);
+      //  String msg = ExcelUtil.exportExcel(sheetName, titleName, headers, list, pattern, fileName);
+      //  System.out.println(msg);
     }
 }
