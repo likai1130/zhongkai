@@ -145,7 +145,7 @@
 			url="/admin/goods/listNoInventoryQuantity" fit="true" toolbar="#tb">
 				<thead>
 					<th field="id" width="20" align="center">编号</th>
-					<th field="code" width="30" align="center">编码</th>
+					<th field="code" width="30" align="center">条码</th>
 					<th field="name" width="120" align="center">名称</th>
 					<th field="model" width="50" align="center">规格</th>
 					<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
@@ -156,7 +156,7 @@
 			
 			<div id="tb">
 				<div style="padding: 3px">
-				    &nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName" size="20" oninput="searchGoods()"/>
+				    &nbsp;商品条码或名称：&nbsp;<input type="text" id="s_codeOrName" size="20" oninput="searchGoods()"/>
 					<a href="javascript:openStorageDialog(1)" class="easyui-linkbutton" iconCls="icon-add" plain="true">增加到仓库</a>
 				</div>
 			</div>
@@ -167,7 +167,7 @@
 			url="/admin/goods/listHasInventoryQuantity" fit="true" toolbar="#tb2">
 				<thead>
 					<th field="id" width="20" align="center">编号</th>
-					<th field="code" width="30" align="center">编码</th>
+					<th field="code" width="30" align="center">条码</th>
 					<th field="name" width="120" align="center">名称</th>
 					<th field="model" width="50" align="center">规格</th>
 					<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
@@ -181,7 +181,7 @@
 			
 			<div id="tb2">
 			    <div style="padding: 3px">
-				    &nbsp;商品编码或名称：&nbsp;<input type="text" id="s_codeOrName2" size="20" oninput="searchGoods2()"/>
+				    &nbsp;商品条码或名称：&nbsp;<input type="text" id="s_codeOrName2" size="20" oninput="searchGoods2()"/>
 					<a href="javascript:openStorageDialog(2)" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改数量或成本价</a>
 					<a href="javascript:deleteStorage()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 				</div>
