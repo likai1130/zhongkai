@@ -346,7 +346,7 @@
 			url="/admin/goods/list" fit="true" toolbar="#tb">
 				<thead>
 					<th field="id" width="30" align="center" hidden=true>编号</th>
-					<th field="code" width="50" align="center">条码</th>
+					<th field="code" width="80" align="center">条码</th>
 					<th field="name" width="150" align="center">粮油名称</th>
 					<th field="model" width="50" align="center">规格</th>
 					<th field="typeId" width="40" align="center" hidden=true formatter="formatGoodsTypeId">类别ID</th>
@@ -426,12 +426,12 @@
 				<tr>
 					<td>采购价：</td>	
 					<td>
-						<input type="text" id="purchasingPrice" name="purchasingPrice" class="easyui-numberbox" data-options="min:0" required="true" style="width: 120px"  />
+						<input type="text" id="purchasingPrice" name="purchasingPrice" class="easyui-numberbox" data-options="min:0,precision:2" required="true" style="width: 120px"  />
 					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>销售价：</td>
 					<td>
-						<input type="text" id="sellingPrice" name="sellingPrice" class="easyui-numberbox" data-options="min:0" required="true" style="width: 120px"  />
+						<input type="text" id="sellingPrice" name="sellingPrice" class="easyui-numberbox" data-options="min:0,precision:2" required="true" style="width: 120px"  />
 					</td>
 				</tr>
 				<tr>
