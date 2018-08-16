@@ -8,9 +8,11 @@
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="/static/js/jquery.PrintArea.js"></script>
 <script type="text/javascript">
-	
-	function chooseGoodsType(){
+
+    function chooseGoodsType(){
 		$("#dlg").dialog("open").dialog("setTitle","选择粮油类别");
 		$("#typeTree").tree({
 			url:'/admin/goodsType/loadTreeInfo',
@@ -82,25 +84,25 @@
 </head>
 <body style="margin: 1px">
 	<table id="dg" title="当前库存查询" class="easyui-datagrid"
-	fitColumns="true" pagination="true" rownumbers="true" pageSize=20
-	url="/admin/goods/listInventory" fit="true" toolbar="#tb">
+		   fitColumns="true" pagination="true" rownumbers="true" pageSize=20
+		   url="/admin/goods/listInventory" fit="true" toolbar="#tb">
 		<thead>
-			<th field="code" width="80" align="center">条码</th>
-			<th field="name" width="130" align="left">粮油名称</th>
-			<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
-			<th field="model" width="50" align="center">规格</th>
-			<th field="inventoryQuantity" width="50" align="center">库存数量</th>
-			<th field="saleTotal" width="50" align="center">销售总数</th>
-			<th field="lastPurchasingPrice" width="50" align="right" formatter="formatLastPurchasingPrice">上次进价</th>
-			<th field="purchasingPrice" width="50" align="right" formatter="formatPurchasingPrice">成本均价</th>
-			<th field="sellingPrice" width="50" align="right" formatter="formatSellingPrice">销售价</th>
-			<th field="amount" width="60" align="right" formatter="formatAmount">库存总值</th>
-			<th field="unit" width="50" align="center">整量单位</th>
-			<th field="scattered" width="50" align="center">零整比</th>
-			<th field="producer" width="150" align="left">生产厂商</th>
+		<th field="code" width="80" align="center">条码</th>
+		<th field="name" width="130" align="left">粮油名称</th>
+		<th field="typeName" width="50" align="center" formatter="formatGoodsTypeName">类别</th>
+		<th field="model" width="50" align="center">规格</th>
+		<th field="inventoryQuantity" width="50" align="center">库存数量</th>
+		<th field="saleTotal" width="50" align="center">销售总数</th>
+		<th field="lastPurchasingPrice" width="50" align="right" formatter="formatLastPurchasingPrice">上次进价</th>
+		<th field="purchasingPrice" width="50" align="right" formatter="formatPurchasingPrice">成本均价</th>
+		<th field="sellingPrice" width="50" align="right" formatter="formatSellingPrice">销售价</th>
+		<th field="amount" width="60" align="right" formatter="formatAmount">库存总值</th>
+		<th field="unit" width="50" align="center">整量单位</th>
+		<th field="scattered" width="50" align="center">零整比</th>
+		<th field="producer" width="150" align="left">生产厂商</th>
 		</thead>
 	</table>
-	
+
 	<div id="tb">
 		<div style="padding: 5px">
 		    <input type="hidden" id="typeId"/>
@@ -110,7 +112,7 @@
 			&nbsp;&nbsp;<a href="javascript:exportStock()" class="easyui-linkbutton" iconCls="icon-save" plain="true">导出Excel</a>
 		</div>
 	</div>
-	
+
 	
 	<div id="dlg" class="easyui-dialog" style="width: 180px;height: 300px;padding: 10px 10px;top: 60px;left: 76px"
 	closed="true" buttons="#dlg-buttons" >
@@ -121,7 +123,6 @@
 		<a href="javascript:saveGoodsTypeChoose()" class="easyui-linkbutton" iconCls="icon-ok" plain="true">选择</a>   
 		<a href="javascript:closeGoodsTypeChooseDialog()" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">关闭</a>
 	</div>
-	
-	
+
 </body>
 </html>
