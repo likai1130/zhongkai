@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>销售单打印模板</title>
+<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
+<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<!--<script type="text/javascript" src="/static/js/jquery-1.9.0.js"></script>-->
+<script type="text/javascript" src="/static/js/jquery.PrintArea.js"></script>
+    <script type="text/javascript" src="/static/js/date.js"></script>
+    <script type="text/javascript">
+
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
+        }
+
+        function preview(){
+            $("#PrintHTML").printArea();
+        }
+
+        $(document).ready(function() {
+            var parms=GetRequest();
+            var saleId=parms['saleId'];
+            var customerName = parms['customerName'];
+            var customerAddress = parms['customerAddress'];
+            var customerNumber = parms['customerNumber'];
+            var customerContact = parms['customerContact'];
+            var saleNumber = parms['saleNumber'];
+            var saleDate = parms['saleDate'];
+            var amountPayable = parms['amountPayable'];
+            var remarks = parms['remarks'];
+            var trueName = parms['trueName'];
+
+            $("#customerName").text("客户名称：" + customerName);
+            $("#customerAddress").text("客户地址：" + customerAddress);
+            $("#customerNumber").text("客户电话：" + customerNumber);
+            $("#customerContact").text("联系人：" + customerContact);
+            $("#saleDate").text("销售日期：" + saleDate);
+            $("#saleNumber").text("销售单号：" + saleNumber);
+            $("#remarks").text("备注：" + remarks);
+            $("#trueName").text("制单人：" + trueName);
+            $("#amountPayable").text("合计：(小写)" + "￥" + amountPayable);
+
+            var upAmountPayable =  upDigit(amountPayable);
+            $("#upAmountPayable").text("合计：(大写)" + upAmountPayable)
+
+            var tbody=window.document.getElementById("printdg2");
+            $.ajax({
+                type:"get",
+                dataType: "json",
+                url: "/admin/saleList/listGoods",
+                data: {
+                    saleListId:saleId
+                },
+                success: function (msg) {
+                    if (msg.rows) {
+                        var str = "";
+                        var data = msg.rows;
+                        for (i in data) {
+                            str += "<tr>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].code + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].name + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].model + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + "¥"+ data[i].price + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].num + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].unit + "</td>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + "¥"+ data[i].total + "</td>" +
+                                "</tr>";
+                        }
+                        tbody.innerHTML = str;
+                    }
+                },
+                error: function () {
+                    alert("查询失败")
+                }
+            })
+        });
+
+        function upDigit(n)
+        {
+            var fraction = ['角', '分'];
+            var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+            var unit = [ ['元', '万', '亿'], ['', '拾', '佰', '仟']  ];
+            var head = n < 0? '欠': '';
+            n = Math.abs(n);
+
+            var s = '';
+
+            for (var i = 0; i < fraction.length; i++)
+            {
+                s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+            }
+            s = s || '整';
+            n = Math.floor(n);
+
+            for (var i = 0; i < unit[0].length && n > 0; i++)
+            {
+                var p = '';
+                for (var j = 0; j < unit[1].length && n > 0; j++)
+                {
+                    p = digit[n % 10] + unit[1][j] + p;
+                    n = Math.floor(n / 10);
+                }
+                s = p.replace(/(零.)*零$/, '').replace(/^$/, '零')  + unit[0][i] + s;
+            }
+            return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
+        }
+
+    </script>
+</head>
+<body class="easyui-layout" style="margin: 1px" >
+<a href="javascript:preview()" class="easyui-linkbutton" iconCls="icon-print" plain="true">打印</a>
+<div id="PrintHTML" style="background-color: white;" align="center">
+    <table style="width: 100%;" align="center">
+        <tr>
+            <td colspan="3" style="height: 25px; text-align: center; font-weight: bold; font-size: 24px;">中凯百货有限公司（荥阳店）</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 25px; text-align: center; font-weight: bold; font-size: 24px;">销售清单</td>
+        </tr>
+    </table>
+    <table style="width: 50%;" align="left">
+        <tr>
+            <td style="width: 50%; height: 25px; font-size: 12px; text-align: left;" id="customerName">客户名称：</td>
+        </tr>
+        <tr>
+            <td style="width: 50%; height: 25px; font-size: 12px; text-align: left;" id="customerAddress">客户地址：</td>
+        </tr>
+        <tr>
+            <td style="width: 50%; height: 25px; font-size: 12px; text-align: left;" id="customerNumber">客户电话：</td>
+        </tr>
+        <tr>
+            <td style="width: 50%; height: 25px; font-size: 12px;text-align: left;" id="customerContact">联系人：</td>
+        </tr>
+    </table>
+    <table align="right" style="width: 25%">
+        <tr>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">公司地址：南京东路XXX号XX广场8层 (九江路XXX号侧门电梯直达)<br /></td>
+        </tr>
+        <tr>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">联系电话：13838339009</td>
+        </tr>
+        <tr>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;" id="saleNumber">销售单号：</td>
+        </tr>
+        <tr>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left; padding-right: 2%" id="saleDate">开单日期：</td>
+        </tr>
+    </table>
+    <div style="width: 100%;" align="center">
+        <table style="width: 100%; border: solid 1px black; border-collapse: collapse; table-layout: fixed; margin-top: 5px;">
+            <thead>
+            <tr>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">条码</th>
+                <th style="width: 15%; font-size: 12px; text-align: center; border: 1px solid black;">粮油名称</th>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">规格</th>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;" formatter="formatPrice">单价</th>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">重量</th>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">整量单位</th>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;" formatter="formatTotal">总金额</th>
+            </tr>
+            </thead>
+            <tbody id="printdg2"></tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4" style="font-size: 12px; height: 30px; text-align: left; border: 1px solid black; padding-left: 20px;" id="upAmountPayable"></td>
+                <td colspan="3"style="font-size: 12px; text-align: left; border: 1px solid black; padding-left: 20px;" id="amountPayable"></td>
+            </tr>
+            <tr>
+                <td colspan="7" style="font-size: 12px; height: 30px; text-align: left; border: 1px solid black; padding-left: 20px;" id="remarks"></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div style="width: 100%;" align="center">
+        <table style="width: 100%; table-layout: fixed; margin-top: 5px;">
+            <tr>
+                <td style="width: 60%;font-size: 12px; text-align: left; ">
+                    注:请核对以上清单，如有问题，请收到货48小时内向供货方提货，否则逾期恕不负责。
+                </td>
+            </tr>
+        </table>
+        <table style="width: 100%;  border-collapse: collapse; margin-top: 5px;">
+            <tr>
+                <td style="font-size: 12px; text-align: left;" id="trueName"></td>
+                <td style="font-size: 12px; text-align: left;">送货人（签字）：______________</td>
+                <td style="font-size: 12px; text-align: left;">收货人（签字）：______________</td>
+                <td style="font-size: 12px; text-align: left;">收货日期：______________</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
