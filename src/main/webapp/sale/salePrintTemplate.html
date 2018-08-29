@@ -69,7 +69,9 @@
                         var str = "";
                         var data = msg.rows;
                         for (i in data) {
+                            var codeNum = Number(i) + 1;
                             str += "<tr>" +
+                                "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + codeNum + "</td>" +
                                 "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].code + "</td>" +
                                 "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].name + "</td>" +
                                 "<td style=\"font-size: 12px; text-align: center; border: 1px solid black;\">" + data[i].model + "</td>" +
@@ -147,10 +149,10 @@
     </table>
     <table align="right" style="width: 25%">
         <tr>
-            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">公司地址：南京东路XXX号XX广场8层 (九江路XXX号侧门电梯直达)<br /></td>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">公司地址：河南省郑州市荥阳市兴华路与站前路口北100米路西</td>
         </tr>
         <tr>
-            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">联系电话：13838339009</td>
+            <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;">联系电话：0371-64629369 &nbsp;&nbsp;&nbsp;&nbsp; 13071021886</td>
         </tr>
         <tr>
             <td style="width: 40%; height: 25px; font-size: 12px; text-align: left;" id="saleNumber">销售单号：</td>
@@ -163,6 +165,7 @@
         <table style="width: 100%; border: solid 1px black; border-collapse: collapse; table-layout: fixed; margin-top: 5px;">
             <thead>
             <tr>
+                <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">序号</th>
                 <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">条码</th>
                 <th style="width: 15%; font-size: 12px; text-align: center; border: 1px solid black;">粮油名称</th>
                 <th style="width: 10%; font-size: 12px; text-align: center; border: 1px solid black;">规格</th>
@@ -176,10 +179,10 @@
             <tfoot>
             <tr>
                 <td colspan="4" style="font-size: 12px; height: 30px; text-align: left; border: 1px solid black; padding-left: 20px;" id="upAmountPayable"></td>
-                <td colspan="3"style="font-size: 12px; text-align: left; border: 1px solid black; padding-left: 20px;" id="amountPayable"></td>
+                <td colspan="4"style="font-size: 12px; text-align: left; border: 1px solid black; padding-left: 20px;" id="amountPayable"></td>
             </tr>
             <tr>
-                <td colspan="7" style="font-size: 12px; height: 30px; text-align: left; border: 1px solid black; padding-left: 20px;" id="remarks"></td>
+                <td colspan="8" style="font-size: 12px; height: 30px; text-align: left; border: 1px solid black; padding-left: 20px;" id="remarks"></td>
             </tr>
             </tfoot>
         </table>
